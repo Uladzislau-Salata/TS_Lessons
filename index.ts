@@ -1,23 +1,12 @@
-const test: null = null;
+let id: symbol = Symbol("id");
 
-const test2: any = null;
+const data = {
+  [id]: 1,
+};
 
-const test3: string = null;
-const test4: number = null;
+console.log(data[id]);
 
-const test5: undefined = undefined;
-const test6: any = undefined;
-const test7: string = undefined;
+const num1: bigint = 1n;
+const num2: bigint = 2n;
 
-let smth;
-
-function getRndData() {
-  if (Math.random() < 0.5) {
-    return null;
-  } else {
-    return " Some data ";
-  }
-}
-
-const data = getRndData();
-const trimerData = data ? data.trim() : null;
+console.log(num1 + num2);
