@@ -1,20 +1,23 @@
-const isBirthdayData: boolean = true;
-let ageData: number = 40;
-const userNameData: string = "John";
+const test: null = null;
 
-const createError = (msg: string) => {
-  throw new Error(msg);
-};
+const test2: any = null;
 
-function logBrtMsg(isBirthday: boolean, userName: string, age: number): string {
-  if (isBirthday === true) {
-    return `Congrats ${userName.toLocaleUpperCase()}, age: ${age + 1}`;
-  } else if (isBirthday === false) {
-    return "Too bad";
+const test3: string = null;
+const test4: number = null;
+
+const test5: undefined = undefined;
+const test6: any = undefined;
+const test7: string = undefined;
+
+let smth;
+
+function getRndData() {
+  if (Math.random() < 0.5) {
+    return null;
+  } else {
+    return " Some data ";
   }
-  return createError("Error");
 }
 
-logBrtMsg(isBirthdayData, userNameData, ageData);
-
-// const smth: never = undefined;
+const data = getRndData();
+const trimerData = data ? data.trim() : null;
