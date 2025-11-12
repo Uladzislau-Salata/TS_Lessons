@@ -1,52 +1,50 @@
-const isBirthdayData: boolean = true;
-let ageData: number = 40;
-const userNameData: string = "John";
-
-const userData = {
-  isBirthdayData: true,
-  ageData: 40,
-  userNameData: "John",
-  messages: { error: "Error" },
+const electricityUserData = {
+  readings: 95,
+  units: "kWt",
+  mode: "double",
 };
 
-const createError = (msg: string) => {
-  throw new Error(msg);
+const waterUserData = {
+  readings: 3,
+  units: "m3",
 };
 
-function logBrtMsg({
-  isBirthdayData,
-  userNameData,
-  ageData,
-  messages: { error },
-}: {
-  isBirthdayData: boolean;
-  userNameData: string;
-  ageData: number;
-  messages: { error: string };
-}): string {
-  if (isBirthdayData) {
-    return `Congrats ${userNameData.toLocaleUpperCase()}, age: ${ageData + 1}`;
+const elRate: number = 0.45;
+const wRate: number = 2;
+
+const monthPayments: number[] = [0, 0]; // [electricity, water]
+
+const calculatePayments = (
+  { readings, mode }: { readings: number; mode: string },
+  wData: { readings: number },
+  elRate: number,
+  wRate: number
+): void => {
+  if (mode === "double" && readings < 50) {
+    monthPayments[0] = readings * elRate * 0.7;
   } else {
-    return createError(error);
+    monthPayments[0] = readings * elRate;
   }
-}
 
-console.log(logBrtMsg(userData));
+  monthPayments[1] = wData.readings * wRate;
+};
 
-const departments: string[] = ["dev", "design", "marketing"];
+calculatePayments(electricityUserData, waterUserData, elRate, wRate);
 
-const department = departments[0];
+const sendInvoice = (
+  [el, water]: number[],
+  electricityUserData: { readings: number; units: string },
+  waterUserData: { readings: number; units: string }
+): string => {
+  const text = `    Hello!
+    This month you used ${electricityUserData.readings} ${electricityUserData.units} of electricity
+    It will cost: ${el}€
+    
+    This month you used ${waterUserData.readings} ${waterUserData.units} of water
+    It will cost: ${water}€`;
 
-// departments.push(5);
-const report = departments
-  .filter((d: string) => d !== "dev")
-  .map((d: string) => `${d}-done`);
+  return text;
+};
 
-const nums: number[][] = [
-  [3, 5, 6],
-  [3, 5, 6],
-];
-
-const [first] = report;
-
-console.log(first);
+const invoice = sendInvoice(monthPayments, electricityUserData, waterUserData);
+console.log(invoice);
