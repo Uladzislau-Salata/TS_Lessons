@@ -1,90 +1,35 @@
-const userData = {
-  isBirthdayData: true,
-  ageData: 40,
-  userNameData: "John",
-  messages: { error: "Error" },
-};
+let msg: "Hello" = "Hello";
 
-const userDataTuple: [...boolean[], number, string] = [true, false, 40, "John"];
-// userDataTuole[3];
-// userDataTuole.push(50);
-// userDataTuole[3];
+msg = "Hello";
+const port3000: number = 3000;
+const port3001: number = 3001;
 
-const res = userDataTuple.map((t) => `${t}-data`);
-
-const [bthd, age, userName] = userDataTuple;
-
-const createError = (msg: string) => {
-  throw new Error(msg);
-};
-
-function logBrtMsg({
-  isBirthdayData,
-  userNameData,
-  ageData,
-  messages: { error },
-}: {
-  isBirthdayData: boolean;
-  userNameData: string;
-  ageData: number;
-  messages: { error: string };
-}): string {
-  if (isBirthdayData) {
-    return `Congrats ${userNameData.toLocaleUpperCase()}, age: ${ageData + 1}`;
+function startServer(
+  protocol: "http" | "https",
+  port: 3000 | 3001
+): "Server started" {
+  if (port === 3000 || port === 3001) {
+    console.log(`Server started on ${protocol}://server:${port}`);
   } else {
-    return createError(error);
+    console.error("Invalid port");
   }
+  return "Server started";
 }
 
-console.log(logBrtMsg(userData));
+startServer("https", 3001);
 
-const message: string | number = 5;
-
-const messages: string[] | number[] = ["a", "b"];
-
-// function printMsg(msg: string | number|boolean): void {
-//   if (typeof msg === "string"|| typeof msg==='number') {
-//     console.log(msg.toString());
-//   } else {
-//     console.log(msg);
-//   }
-//   console.log(msg);
-// }
-
-function printMsg(msg: string[] | number | boolean): void {
-  if (Array.isArray(msg)) {
-    msg.forEach((m) => console.log(m));
-  } else if (typeof msg === "number") {
-    console.log(msg.toFixed());
-  } else {
-    console.log(msg);
-  }
+function createAnimation(
+  id: string | number,
+  animaName: string,
+  timingFunc: "ease" | "ease-out" | "ease-in" = "ease",
+  duration: number,
+  iterCount: "infinite" | number
+): void {
+  // const elem = document.querySelector(`#${id}`) as HTMLElement;
+  // if (elem) {
+  console.log(`${animaName} ${timingFunc} ${duration} ${iterCount}`);
+  // elem.style.animation = `${animaName}${timingFunc}${duration}${iterCount}`;
+  // }
 }
 
-printMsg(4);
-
-const printRedings = (a: string | number, b: number | boolean): void => {
-  if (a === b) {
-    console.log(a, b);
-  }
-};
-
-const printRedings2 = (a: string | number[]) => {
-  console.log(a.slice(0, 3));
-};
-
-function checkReadings(readings: { system: number } | { user: number }): void {
-  if ("system" in readings) {
-    console.log(readings.system);
-  } else {
-    console.log(readings.user);
-  }
-}
-
-function logValue(x: string | Date) {
-  if (x instanceof Date) {
-    console.log(x.getDate());
-  } else {
-    console.log(x.trim());
-  }
-}
+createAnimation("id", "fade", "ease-in", 5, "infinite");
