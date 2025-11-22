@@ -1,58 +1,32 @@
-// type Config = { protocol: "http" | "https"; port: 3000 | 3001 };
-interface Config {
+interface IConfig {
   protocol: "http" | "https";
   port: 3000 | 3001;
-  log: (msg: string) => void;
 }
 
-// type Role = {
-//   role: string;
-// };
-// type ConfigWithRole = Config & Role;
-
-interface Role {
+interface IRole {
   role: string;
 }
 
-interface ConfigWithRole extends Config, Role {}
+interface IConfig {
+  date: Date;
+}
 
-const serverConfig: ConfigWithRole = {
+interface IConfigWithRole extends IConfig, IRole {}
+
+const serverIConfig: IConfigWithRole = {
   protocol: "https",
   port: 3001,
   role: "admin",
-  log: (msg: string): void => console.log(msg),
+  date: new Date(),
 };
 
-// const backupConfig: ConfigWithRole = {
-//   protocol: "http",
-//   port: 3000,
-//   role: "sysadmin",
-// };
-
-type StartFunction = (
+const startIServer = (
   protocol: "http" | "https",
-  port: 3000 | 3001,
-  log: (msg: string) => void
-) => string;
-
-const startServer: StartFunction = (
-  protocol: "http" | "https",
-  port: 3000 | 3001,
-  log: (msg: string) => void
+  port: 3000 | 3001
 ): "Server started" => {
-  log(`Server started on ${protocol}://server:${port}`);
+  console.log(`Server started on ${protocol}://server:${port}`);
 
   return "Server started";
 };
 
-startServer(serverConfig.protocol, serverConfig.port, serverConfig.log);
-
-interface Styles {
-  [key: string]: string;
-}
-
-const styles: Styles = {
-  position: "absolute",
-  top: "20px",
-  left: "50px",
-};
+startIServer(serverIConfig.protocol, serverIConfig.port);
