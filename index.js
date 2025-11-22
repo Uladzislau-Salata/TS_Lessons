@@ -1,23 +1,35 @@
-var msg = "Hello";
-msg = "Hello";
-var port3000 = 3000;
-var port3001 = 3001;
-function startServer(protocol, port) {
-    if (port === 3000 || port === 3001) {
-        console.log("Server started on ".concat(protocol, "://server:").concat(port));
-    }
-    else {
-        console.error("Invalid port");
-    }
-    return "Server started";
-}
-startServer("https", 3001);
-function createAnimation(id, animaName, timingFunc, duration, iterCount) {
-    if (timingFunc === void 0) { timingFunc = "ease"; }
-    // const elem = document.querySelector(`#${id}`) as HTMLElement;
-    // if (elem) {
-    console.log("".concat(animaName, " ").concat(timingFunc, " ").concat(duration, " ").concat(iterCount));
-    // elem.style.animation = `${animaName}${timingFunc}${duration}${iterCount}`;
+// главный объект со всеми данными, должен подходить под формат TotalWarehouse
+var totalData = {
+    jackets: 5,
+    hats: "empty",
+    socks: "empty",
+    pants: 15,
+    scissors: 15,
+    paper: true,
+    dishwashers: 3,
+    cookers: "empty",
+    mixers: 14,
+    deficit: true,
+    date: new Date(),
+};
+// Реализуйте функцию, которая принимает в себя главный объект totalData нужного формата
+// и возвращает всегда строку
+// Функция должна отфильтровать данные из объекта и оставить только те названия товаров, у которых значение "empty"
+// и поместить их в эту строку. Если таких товаров нет - возвращается другая строка (см ниже)
+// С данным объектом totalData строка будет выглядеть:
+// "We need this items: hats, socks, cookers"
+// Товары через запятую, в конце её не должно быть. Пробел после двоеточия, в конце строки его нет.
+function printReport(data) {
+    // let wareTotal: string[];
+    var result = Object.entries(data);
+    console.log(result);
+    // for (let k in data) {
+    //   if (data[k] === "empty") {
+    //   } else {
+    //     return "Everything fine";
+    //   }
     // }
+    // return `We need this items: ${"..."}`;
 }
-createAnimation("id", "fade", "ease-in", 5, "infinite");
+// console.log(printReport(totalData));
+printReport(totalData);
