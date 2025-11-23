@@ -1,22 +1,23 @@
-const salary = 500;
-
-interface UserData {
-  isBirthdayData: boolean;
-  ageData: number;
-  userNameData: string;
+interface User {
+  login: string;
+  password: string;
+  age: number;
+  // addr?: string;
+  addr: string | undefined;
+  parents?: {
+    mother?: string;
+    father?: string;
+  };
 }
 
-const userData = '{"isBirthdayData":true,"ageData":40, "userNameData":"John"}';
+const user: User = {
+  login: "first",
+  password: "qwerty",
+  age: 50,
+  addr: "qwdfsd",
+};
 
-const arr = ["sss", 5, true];
-
-const userObj: UserData = JSON.parse(userData);
-
-console.log(userObj.smt);
-
-const isOkay = true;
-let movement: boolean | string = false;
-
-if (isOkay) {
-  movement = "moving";
+const dbName = "12344";
+function sendUserDate(obj: User, db?: string): void {
+  console.log(obj.parents?.mother?.toLowerCase(), db?.toLowerCase);
 }
