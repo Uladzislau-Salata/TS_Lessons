@@ -1,50 +1,29 @@
-interface User {
-  readonly login: string;
-  password: string;
-  age: number;
-  // addr?: string;
-  readonly addr: string | undefined;
-  parents?: {
-    mother?: string;
-    father?: string;
-  };
+const TOP = "Top";
+const RIGHT = "Right";
+
+enum Directions {
+  TOP,
+  RIGHT,
+  LEFT,
+  BOTTOM,
 }
 
-const user: User = {
-  login: "first",
-  password: "qwerty",
-  age: 50,
-  addr: "qwdfsd",
-};
-
-const userFreeze: Readonly<User> = {
-  login: "first",
-  password: "qwerty",
-  age: 50,
-  addr: "qwdfsd",
-};
-
-userFreeze.age = 3345;
-userFreeze.password = "123123";
-
-// user.login = "asdvf";
-user.password = "asdvf";
-
-let dbName = "12345";
-
-function sendUserDate(obj: User, db?: string): void {
-  dbName = "1234";
-  console.log(obj.parents?.mother?.toLowerCase(), db?.toLowerCase);
+const enum TimingFunc {
+  EASE = "ease",
+  EASE_IN = "ease-in",
+  LINEAR = "linear",
 }
 
-const baasicPorts: ReadonlyArray<number> = [3000, 3001, 5555];
-baasicPorts[0] = 5;
-baasicPorts.push(4440);
+const enum TimingFuncN {
+  EASE = 1,
+  EASE_IN = 2,
+  LINEAR = EASE * 3,
+}
 
-// const baasicPorts: readonly number[] = [3000, 3001, 5555];
-// baasicPorts[0] = 5;
-// baasicPorts.push(4440);
+function frame(elem: string, dir: Directions, tFunc: TimingFunc): void {
+  if (dir === Directions.RIGHT) {
+    console.log(tFunc);
+  }
+}
 
-// const baasicPorts: readonly [number, ...string[]] = [3000, "3001", "5555"];
-// baasicPorts[0] = 5;
-// baasicPorts.push(4440);
+frame("id", Directions.RIGHT, TimingFunc.LINEAR);
