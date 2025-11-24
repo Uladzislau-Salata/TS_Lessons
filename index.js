@@ -1,15 +1,28 @@
-var TOP = "Top";
-var RIGHT = "Right";
-var Directions;
-(function (Directions) {
-    Directions[Directions["TOP"] = 0] = "TOP";
-    Directions[Directions["RIGHT"] = 1] = "RIGHT";
-    Directions[Directions["LEFT"] = 2] = "LEFT";
-    Directions[Directions["BOTTOM"] = 3] = "BOTTOM";
-})(Directions || (Directions = {}));
-function frame(elem, dir, tFunc) {
-    if (dir === Directions.RIGHT) {
-        console.log(tFunc);
+// let smth: unknown;
+// smth = "str";
+// let data: string[] = smth;
+// data.find((e) => e);
+// const someValue:unknown=10;
+// someValue.method();
+function fetchData(data) {
+    if (typeof data === "string") {
+        console.log(data.toLowerCase());
     }
 }
-frame("id", Directions.RIGHT, "linear" /* TimingFunc.LINEAR */);
+var userData = '{"isBirthdayData":true,"ageData":40, "userNameData":"John"}';
+function safeParse(s) {
+    return JSON.parse(s);
+}
+var data = safeParse(userData);
+function transferData(d) {
+    if (typeof d === "string") {
+        console.log(d.toLowerCase());
+    }
+    else if (typeof d === "object" && d) {
+        console.log(data);
+    }
+    else {
+        console.error("Some error");
+    }
+}
+transferData(data);
