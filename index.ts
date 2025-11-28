@@ -1,21 +1,52 @@
-const dataFromControl = {
-  water: 200,
-  el: 350,
-};
-
-function checkReading(data: typeof dataFromControl): boolean {
-  const dataFromUser = {
-    water: 200,
-    el: 350,
-  };
-
-  if (data.el === dataFromUser.el && data.water === dataFromUser.water) {
-    return true;
-  } else {
-    return false;
-  }
+enum TypesOfMedia {
+  VIDEO = "video",
+  AUDIO = "audio",
 }
 
-const PI = 3.14;
+enum FormatsOfMedia {
+  MP4 = ".mp4",
+  MOV = ".mov",
+  MKV = ".mkv",
+  FLV = ".flv",
+  WEBM = ".webM",
+}
 
-let PIClone: typeof PI;
+interface ConfigMedia {
+  name: string;
+  type: TypesOfMedia;
+  format: FormatsOfMedia;
+  subtitles?: string;
+  marks?: unknown;
+}
+
+function playMedia(
+  { name, type, format, subtitles, marks }: ConfigMedia = {
+    name: "example",
+    type: TypesOfMedia.VIDEO,
+    format: FormatsOfMedia.WEBM,
+  }
+): string {
+  let marksLog: string;
+
+  if (Array.isArray(marks) === true) {
+    marksLog = marks.join(" ");
+  } else if (typeof marks === "string") {
+    marksLog = marks;
+  } else {
+    marksLog = "Unsupported type of marks";
+  }
+
+  console.log(`Media ${name}${format} is ${type}
+    Marks: ${marksLog}
+    Subtitles: ${subtitles ?? "none"}`);
+
+  return "Media started";
+}
+
+playMedia({
+  name: "WoW",
+  format: FormatsOfMedia.MKV,
+  type: TypesOfMedia.AUDIO,
+  subtitles: "hmhmhm hmhmhm doh",
+  marks: ["4:30", "5:40"],
+});
