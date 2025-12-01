@@ -1,52 +1,36 @@
-enum TypesOfMedia {
-  VIDEO = "video",
-  AUDIO = "audio",
-}
+const fetchData = (url: string, method: "GET" | "POST"): void => {
+  console.log(method);
+};
 
-enum FormatsOfMedia {
-  MP4 = ".mp4",
-  MOV = ".mov",
-  MKV = ".mkv",
-  FLV = ".flv",
-  WEBM = ".webM",
-}
+const reqOption = {
+  url: "https://someurl.com",
+  method: "GET",
+} as const;
 
-interface ConfigMedia {
-  name: string;
-  type: TypesOfMedia;
-  format: FormatsOfMedia;
-  subtitles?: string;
-  marks?: unknown;
-}
+const str = "str";
+const method = "GET";
 
-function playMedia(
-  { name, type, format, subtitles, marks }: ConfigMedia = {
-    name: "example",
-    type: TypesOfMedia.VIDEO,
-    format: FormatsOfMedia.WEBM,
-  }
-): string {
-  let marksLog: string;
+fetchData("qqq", "GET");
+// fetchData(reqOption.url, reqOption.method as "GET");
+fetchData(reqOption.url, <"GET">reqOption.method);
 
-  if (Array.isArray(marks) === true) {
-    marksLog = marks.join(" ");
-  } else if (typeof marks === "string") {
-    marksLog = marks;
-  } else {
-    marksLog = "Unsupported type of marks";
-  }
+const box = document.querySelector(".box") as HTMLElement;
+const input = <HTMLInputElement>document.querySelector("input");
 
-  console.log(`Media ${name}${format} is ${type}
-    Marks: ${marksLog}
-    Subtitles: ${subtitles ?? "none"}`);
+// const someNumber: number = input.value as any as number;
+const someNumber: number = +input.value;
+console.log(someNumber);
+// box.style;
+// box?.classList;
+let a = "value" as const;
 
-  return "Media started";
-}
+let b = { f: 100 } as const;
+let c = [] as const;
 
-playMedia({
-  name: "WoW",
-  format: FormatsOfMedia.MKV,
-  type: TypesOfMedia.AUDIO,
-  subtitles: "hmhmhm hmhmhm doh",
-  marks: ["4:30", "5:40"],
-});
+let value = "value";
+let arr = ["sd", "dff"];
+let obj = { f: 100 };
+
+// let T0 = value as const;
+
+// let T5 =(Math.round(Math.random()*1)?'yes':'no')as const;
