@@ -1,39 +1,51 @@
-// let num: Number = new Number(5);
-// let num2: number = 5;
-// let num3 = Number(5);
-
-// num=num2;
-// num2=num;
-
-const num = 5;
-
-const strNum: string = num.toString();
-
-const str = "5";
-const numStr: number = +str;
-
-interface Depatment {
-  name: string;
-  budget: number;
+function printMsg(msg: string[] | number | boolean): void {
+  if (Array.isArray(msg)) {
+    msg.forEach((m) => console.log(m));
+  } else if (isNumber(msg)) {
+    console.log(msg);
+  } else {
+    console.log(msg);
+  }
+  console.log(msg);
 }
 
-const depatment: Depatment = {
-  name: "web-dev",
-  budget: 500,
-};
+printMsg(4);
 
-interface Project {
-  name: string;
-  projectBudget: number;
+// function isNumber(n: string[] | number | boolean): n is number {
+//   return typeof n === "number";
+// }
+
+function isNumber(n: unknown): n is number {
+  return typeof n === "number";
 }
 
-function transfromDepartment(depatment: Depatment, amount: number): Project {
-  return {
-    name: depatment.name,
-    projectBudget: amount,
+interface Car {
+  engine: string;
+  wheels: {
+    number: number;
+    type: string;
   };
 }
 
-const mainProject: Project = transfromDepartment(depatment, 4400);
+interface Ship {
+  engine: string;
+  sail: string;
+}
 
-console.log(mainProject);
+function repairVehicle(vehicle: Car | Ship) {
+  if (isCar(vehicle)) {
+    vehicle.wheels;
+  } else if (isShip(vehicle)) {
+    vehicle;
+  } else {
+    vehicle;
+  }
+}
+
+function isCar(car: Car | Ship): car is Car {
+  return (car as Car).wheels.number !== undefined;
+}
+
+function isShip(ship: Car | Ship): ship is Ship {
+  return "sail" in ship;
+}

@@ -1,18 +1,15 @@
-var fetchData = function (url, method) {
-    console.log(method);
-};
-var reqOption = {
-    url: "https://someurl.com",
-    method: "GET",
-};
-var str = "str";
-var method = "GET";
-fetchData("qqq", "GET");
-// fetchData(reqOption.url, reqOption.method as "GET");
-fetchData(reqOption.url, reqOption.method);
+function printMsg(msg) {
+    if (Array.isArray(msg)) {
+        msg.forEach(function (m) { return console.log(m); });
+    }
+    else if (typeof msg === "number") {
+        console.log(msg);
+    }
+    else {
+        console.log(msg);
+    }
+    console.log(msg);
+}
+printMsg(4);
 var box = document.querySelector(".box");
-var input = document.querySelector("input");
-var someNumber = +input.value;
-console.log(someNumber);
-// box.style;
-// box?.classList;
+box === null || box === void 0 ? void 0 : box.addEventListener("click", function () { });
