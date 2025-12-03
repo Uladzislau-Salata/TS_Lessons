@@ -1,15 +1,25 @@
-function printMsg(msg) {
-    if (Array.isArray(msg)) {
-        msg.forEach(function (m) { return console.log(m); });
-    }
-    else if (typeof msg === "number") {
-        console.log(msg);
+// Request
+// {
+//     animal: 'cat' | 'dog' | 'bird',
+//     breed: string,
+//     sterilized?: string
+// }
+function checkAnimalData(animal) {
+    if (animal.status === "available") {
+        return animal.data;
     }
     else {
-        console.log(msg);
+        return "".concat(animal.data, ", you can try in ").concat(animal.data.nextUpdateIn);
     }
-    console.log(msg);
 }
-printMsg(4);
-var box = document.querySelector(".box");
-box === null || box === void 0 ? void 0 : box.addEventListener("click", function () { });
+var res1 = {
+    status: "available",
+    data: {
+        animal: "cat",
+        breed: "корги",
+        sterilized: "да",
+        location: "Гродно",
+        age: 5,
+    },
+};
+checkAnimalData(res1);
