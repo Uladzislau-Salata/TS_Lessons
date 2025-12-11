@@ -1,19 +1,58 @@
-const box = document.querySelector(".box") as HTMLElement;
+document.addEventListener("DOMContentLoaded", () => {
+  const forms = document.querySelectorAll("form");
+  const email = document.querySelector("#email") as HTMLInputElement;
+  const title = document.querySelector("#title") as HTMLInputElement;
+  const text = document.querySelector("#text") as HTMLTextAreaElement;
+  const checkbox = document.querySelector("#checkbox") as HTMLInputElement;
 
-const input = document.querySelector("input");
-input?.value;
+  interface IFormData {
+    email: string;
+    title: string;
+    text: string;
+    checkbox: boolean;
+  }
 
-const link = document.querySelector("a");
-if (link) {
-  link.href = "ggoygo";
-}
+  const formData: IFormData = {
+    email: "",
+    title: "",
+    text: "",
+    checkbox: false,
+  };
 
-const p = document.querySelector(".paragraph") as HTMLParagraphElement;
+  forms.forEach((form) =>
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
 
-const links = document.querySelectorAll(".a");
+      // Можно и создавать другой объект для соблюдения иммутабельности, но пока не обязательно
+      formData.email = email?.value ?? "";
+      formData.title = title?.value ?? "";
+      formData.text = text?.value ?? "";
+      formData.checkbox = checkbox?.checked ?? false;
 
-const elem = document.createElement("a");
+      if (validateFormData(formData)) {
+        checkFormData(formData);
+      }
+    })
+  );
 
-link?.addEventListener("click", (e) => {
-  e.preventDefault();
+  function validateFormData(data: IFormData): boolean {
+    // Если каждое из свойств объекта правдиво...
+    if (Object.values(data).every((value) => value)) {
+      return true;
+    } else {
+      console.log("Please, complete all fields");
+      return false;
+    }
+  }
+
+  function checkFormData(data: IFormData) {
+    const { email } = data;
+    const emails = ["example@gmail.com", "example@ex.com", "admin@gmail.com"];
+
+    if (emails.some((e) => e === email)) {
+      console.log("This email is already exist");
+    } else {
+      console.log("Posting data...");
+    }
+  }
 });
