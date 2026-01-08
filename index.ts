@@ -29,3 +29,5 @@ const names = ["Anna", "John"];
 const newArr = names.slice();
 
 names.forEach((name, i, arr) => arr.push("Hey"));
+
+// ывфыв
