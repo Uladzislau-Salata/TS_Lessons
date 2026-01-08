@@ -17,13 +17,13 @@ const n = retNum();
 
 console.log(n);
 
-function f2(): void {
-  return true;
-}
+// function f2(): void {
+//   return true;
+// }
 
-const f3 = function (): void {
-  return true;
-};
+// const f3 = function (): void {
+//   return true;
+// };
 
 const names = ["Anna", "John"];
 const newArr = names.slice();
