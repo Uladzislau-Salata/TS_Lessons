@@ -1,33 +1,35 @@
-type voidFunc = () => void;
+function processingData<T>(data: T): T {
+  return data;
+}
 
-const retString: voidFunc = () => {
-  //... some magic
-  return "string";
+let res1 = processingData(1);
+let res2 = processingData("1");
+
+const num = 10;
+const res3 = processingData<number>(num);
+
+interface PrintUK {
+  design: number;
+}
+
+interface PrintES {
+  design: string;
+}
+
+interface Print<T> {
+  design: T;
+}
+
+const somePrint: Print<string> = {
+  design: "ten",
 };
 
-const s = retString();
-console.log(s);
-
-const retNum: voidFunc = () => {
-  //... some magic
-  return 5;
+const someOtherPrint: Print<number> = {
+  design: 10,
 };
 
-const n = retNum();
+// Array<T>
 
-console.log(n);
+// RefferalSystem<UserID,UserReferals>
 
-// function f2(): void {
-//   return true;
-// }
-
-// const f3 = function (): void {
-//   return true;
-// };
-
-const names = ["Anna", "John"];
-const newArr = names.slice();
-
-names.forEach((name, i, arr) => arr.push("Hey"));
-
-// ывфыв
+T U V S P K/V
