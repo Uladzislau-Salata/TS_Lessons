@@ -1,35 +1,39 @@
-function processingData<T>(data: T): T {
+function processingData<T, S>(data: T[], options: S): string {
+  data.length;
+  switch (typeof data) {
+    case "string":
+      return `${data}, speed ${options}`;
+      break;
+    case "number":
+      return `${data}, speed ${options}`;
+      break;
+    default:
+      return "Not value";
+  }
+}
+
+let res1 = processingData([1], "fast");
+let res2 = processingData(["1"], "slow");
+const res3 = processingData<number, string>([10], "slow");
+
+function processing<T>(data: T): T {
   return data;
 }
 
-let res1 = processingData(1);
-let res2 = processingData("1");
-
-const num = 10;
-const res3 = processingData<number>(num);
-
-interface PrintUK {
-  design: number;
+interface ProcessingFn {
+  <T>(data: T): T;
 }
 
-interface PrintES {
-  design: string;
+let newFunc: ProcessingFn = processing;
+
+interface DataSaver {
+  processing: ProcessingFn;
 }
 
-interface Print<T> {
-  design: T;
-}
-
-const somePrint: Print<string> = {
-  design: "ten",
+const saver: DataSaver = {
+  // processing(data) {
+  //   console.log(data);
+  //   return data;
+  // },
+  processing: processing,
 };
-
-const someOtherPrint: Print<number> = {
-  design: 10,
-};
-
-// Array<T>
-
-// RefferalSystem<UserID,UserReferals>
-
-T U V S P K/V
