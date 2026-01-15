@@ -1,39 +1,44 @@
-function processingData<T, S>(data: T[], options: S): string {
-  data.length;
-  switch (typeof data) {
-    case "string":
-      return `${data}, speed ${options}`;
-      break;
-    case "number":
-      return `${data}, speed ${options}`;
-      break;
-    default:
-      return "Not value";
-  }
+interface ProcessingFn {
+  <T>(data: T): T;
 }
-
-let res1 = processingData([1], "fast");
-let res2 = processingData(["1"], "slow");
-const res3 = processingData<number, string>([10], "slow");
 
 function processing<T>(data: T): T {
   return data;
 }
 
-interface ProcessingFn {
-  <T>(data: T): T;
-}
-
 let newFunc: ProcessingFn = processing;
 
-interface DataSaver {
-  processing: ProcessingFn;
+type Smth<T> = T;
+
+const num: Smth<number> = 5;
+
+interface ParentsOfUser {
+  mother: string;
+  father: string;
 }
 
-const saver: DataSaver = {
-  // processing(data) {
-  //   console.log(data);
-  //   return data;
-  // },
-  processing: processing,
+interface User<ParentsData extends ParentsOfUser> {
+  login: string;
+  age: number;
+  parents: ParentsData;
+}
+
+const user: User<{ mother: string; father: string; married: boolean }> = {
+  login: "str",
+  age: 54,
+  parents: { mother: "Ann", father: "no data", married: true },
 };
+
+type OrNull<Type> = Type | null;
+type OneOrMany<Type> = Type | Type[];
+
+const data: OneOrMany<number[]> = [5, 6];
+
+// const depositMoney = <T extends number | string>(amount: T): T => {
+//   console.log(`req to server with amount:${amount}`);
+//   return amount;
+// };
+
+// depositMoney(500);
+// depositMoney("500");
+// // depositMoney(false);
