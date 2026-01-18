@@ -1,44 +1,123 @@
-interface ProcessingFn {
-  <T>(data: T): T;
+// Создать Generic-интерфейс PlayerData, который подходил бы для создания таких объектов:
+
+interface PlayerData<Game, Hours> {
+  game: Game;
+  hours: Hours;
+  server: string;
 }
 
-function processing<T>(data: T): T {
-  return data;
-}
-
-let newFunc: ProcessingFn = processing;
-
-type Smth<T> = T;
-
-const num: Smth<number> = 5;
-
-interface ParentsOfUser {
-  mother: string;
-  father: string;
-}
-
-interface User<ParentsData extends ParentsOfUser> {
-  login: string;
-  age: number;
-  parents: ParentsData;
-}
-
-const user: User<{ mother: string; father: string; married: boolean }> = {
-  login: "str",
-  age: 54,
-  parents: { mother: "Ann", father: "no data", married: true },
+const player1: PlayerData<string, number> = {
+  game: "CS:GO",
+  hours: 300,
+  server: "basic",
 };
 
-type OrNull<Type> = Type | null;
-type OneOrMany<Type> = Type | Type[];
+const player2: PlayerData<number, string> = {
+  game: 2048,
+  hours: "300 h.",
+  server: "arcade",
+};
 
-const data: OneOrMany<number[]> = [5, 6];
+const player3: PlayerData<string, object> = {
+  game: "Chess",
+  hours: {
+    total: 500,
+    inMenu: 50,
+  },
+  server: "chess",
+};
 
-// const depositMoney = <T extends number | string>(amount: T): T => {
-//   console.log(`req to server with amount:${amount}`);
-//   return amount;
-// };
+// Массив данных с фигурами содержит объекты, у каждого из которых обязательно есть свойство name
+// Каждый объект может еще содержать дополнительные свойства в случайном виде
+// Свойство name может иметь только 4 варианта
+// Функция calculateAmountOfFigures должна принимать массив с объектами, у которых обязательно должно быть свойство name
+// Возвращает она объект-экземпляр AmountOfFigures
+// Внутри себя подсчитывает сколько каких фигур было в массиве и записывает результаты в AmountOfFigures
+// С текущими данными в консоль должно попадать:
+// { squares: 3, circles: 2, triangles: 2, others: 1 }
 
-// depositMoney(500);
-// depositMoney("500");
-// // depositMoney(false);
+interface AmountOfFigures {
+  squares: number;
+  circles: number;
+  triangles: number;
+  others: number;
+}
+
+enum Names {
+  RECT = "rect",
+  TRIANGLE = "triangle",
+  LINE = "line",
+  CIRCLE = "circle",
+}
+
+interface DataOfFigures {
+  name: Names;
+  data?: Record<string, number> | null;
+}
+
+function calculateAmountOfFigures(figure: DataOfFigures[]): AmountOfFigures {
+  let AFigures = {
+    squares: 0,
+    circles: 0,
+    triangles: 0,
+    others: 0,
+  };
+
+  for (const k in figure) {
+    // console.log(figure[k]?.name);
+    switch (figure[k]?.name) {
+      case Names.RECT:
+        AFigures.squares += 1;
+        break;
+      case Names.TRIANGLE:
+        AFigures.triangles += 1;
+        break;
+      case Names.LINE:
+        AFigures.others += 1;
+        break;
+      case Names.CIRCLE:
+        AFigures.circles += 1;
+        break;
+      default:
+        break;
+    }
+  }
+
+  return AFigures;
+}
+
+const data = [
+  {
+    name: Names.RECT,
+    data: { a: 5, b: 10 },
+  },
+  {
+    name: Names.RECT,
+    data: { a: 6, b: 11 },
+  },
+  {
+    name: Names.TRIANGLE,
+    data: { a: 5, b: 10, c: 14 },
+  },
+  {
+    name: Names.LINE,
+    data: { l: 15 },
+  },
+  {
+    name: Names.CIRCLE,
+    data: { r: 10 },
+  },
+  {
+    name: Names.CIRCLE,
+    data: { r: 5 },
+  },
+  {
+    name: Names.RECT,
+    data: { a: 15, b: 7 },
+  },
+  {
+    name: Names.TRIANGLE,
+  },
+];
+
+console.log(calculateAmountOfFigures(data));
