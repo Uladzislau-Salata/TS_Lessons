@@ -43,80 +43,84 @@ interface AmountOfFigures {
   others: number;
 }
 
-enum Names {
+enum FigureNames {
   RECT = "rect",
   TRIANGLE = "triangle",
   LINE = "line",
   CIRCLE = "circle",
 }
 
-interface DataOfFigures {
-  name: Names;
-  data?: Record<string, number> | null;
+interface Figure {
+  name: FigureNames;
 }
 
-function calculateAmountOfFigures(figure: DataOfFigures[]): AmountOfFigures {
-  let AFigures = {
+interface CustomFigure extends Figure {
+  data?: Record<string, number>;
+}
+
+function calculateAmountOfFigures<T extends Figure>(
+  figure: T[],
+): AmountOfFigures {
+  let amount: AmountOfFigures = {
     squares: 0,
     circles: 0,
     triangles: 0,
     others: 0,
   };
 
-  for (const k in figure) {
-    // console.log(figure[k]?.name);
-    switch (figure[k]?.name) {
-      case Names.RECT:
-        AFigures.squares += 1;
+  figure.forEach((fig) => {
+    switch (fig.name) {
+      case FigureNames.RECT:
+        amount.squares++;
         break;
-      case Names.TRIANGLE:
-        AFigures.triangles += 1;
+      case FigureNames.TRIANGLE:
+        amount.triangles++;
         break;
-      case Names.LINE:
-        AFigures.others += 1;
+      case FigureNames.LINE:
+        amount.others++;
         break;
-      case Names.CIRCLE:
-        AFigures.circles += 1;
+      case FigureNames.CIRCLE:
+        amount.circles++;
         break;
       default:
         break;
     }
-  }
+  });
 
-  return AFigures;
+  return amount;
 }
 
-const data = [
+const data: CustomFigure[] = [
   {
-    name: Names.RECT,
+    name: FigureNames.RECT,
     data: { a: 5, b: 10 },
   },
   {
-    name: Names.RECT,
+    name: FigureNames.RECT,
     data: { a: 6, b: 11 },
   },
   {
-    name: Names.TRIANGLE,
+    name: FigureNames.TRIANGLE,
     data: { a: 5, b: 10, c: 14 },
   },
   {
-    name: Names.LINE,
+    name: FigureNames.LINE,
     data: { l: 15 },
   },
   {
-    name: Names.CIRCLE,
+    name: FigureNames.CIRCLE,
     data: { r: 10 },
   },
   {
-    name: Names.CIRCLE,
+    name: FigureNames.CIRCLE,
     data: { r: 5 },
   },
   {
-    name: Names.RECT,
+    name: FigureNames.RECT,
     data: { a: 15, b: 7 },
   },
   {
-    name: Names.TRIANGLE,
+    name: FigureNames.TRIANGLE,
   },
 ];
 
