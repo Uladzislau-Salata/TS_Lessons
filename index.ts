@@ -14,16 +14,13 @@ function printDebts<T, K extends keyof T, S extends keyof T>(
   console.log(`Company ${company[name]}, debts: ${company[debts]}`);
 }
 
-const hh: Icompany = {
-  name: "HH",
+const google: Icompany = {
+  name: "Google",
   debts: 500000,
 };
 
-printDebts(hh, "name", "debts");
+printDebts(google, "name", "debts");
 
-const google = {
-  name: "Google",
-  open: "true",
-};
+type GoogleKeys = keyof typeof google;
 
-printDebts(google, "name", "open");
+const keys2: GoogleKeys = "debts";
