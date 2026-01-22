@@ -1,89 +1,59 @@
-interface IPhone {
-  company: string;
-  number: number;
+// Condition? true: false;
+
+// SomeType extends OtherType ? TrueType : FalseType;
+
+// const str: string = "Hello";
+
+type Example = "string" extends "Hello" ? string : number;
+
+type FromUserOrFromBase<T extends string | number> = T extends string
+  ? IDataFromUser
+  : IDataFromBase;
+
+interface User<T extends "created" | Date> {
+  created: T extends "created" ? "created" : Date;
 }
 
-// IMobilePhone должен наследоваться от IPhone,
-// тип свойства companyPartner зависит от свойства company
+const user: User<"created"> = {
+  created: "created",
+};
 
-interface IMobilePhone extends IPhone {
-  size: string;
-  companyPartner: IPhone["company"];
-  manufactured: Date;
+interface IDataFromUser {
+  weight: string;
 }
 
-// Типизировать объект phones
-
-const phones: IMobilePhone[] = [
-  {
-    company: "Nokia",
-    number: 1285637,
-    size: "5.5",
-    companyPartner: "MobileNokia",
-    manufactured: new Date("2022-09-01"),
-  },
-  {
-    company: "Samsung",
-    number: 4356637,
-    size: "5.0",
-    companyPartner: "SamMobile",
-    manufactured: new Date("2021-11-05"),
-  },
-  {
-    company: "Apple",
-    number: 4552833,
-    size: "5.7",
-    companyPartner: "no data",
-    manufactured: new Date("2022-05-24T12:00:00"),
-  },
-];
-
-interface IPhonesManufacturedAfterDate extends IMobilePhone {
-  initialDate: string;
+interface IDataFromBase {
+  calories: number;
 }
 
-// Функция должна отфильтровать массив данных и вернуть новый массив
-// с телефонами, выпущенными после даты в третьем аргументе
-
-function filterPhonesByDate<T extends IMobilePhone>(
-  phones: T[],
-  key: keyof T,
-  initial: string,
-): IPhonesManufacturedAfterDate[] {
-  return phones
-    .filter((phone) => {
-      const manufactured = phone[key];
-
-      if (
-        manufactured instanceof Date &&
-        manufactured.getTime() > new Date(initial).getTime()
-      ) {
-        return phone;
-      }
-    })
-    .map((phone) => {
-      const newObj = { ...phone, initialDate: initial };
-      return newObj;
-    });
-
-  // phones.forEach((elem, i) => {
-  //   // console.log(elem[key] > new Date(initial));
-
-  //   if (elem[key] > new Date(initial)) {
-  //     arr1.push(elem);
-  //     // console.log(phones[i]);
-  //     // console.log(elem);
-  //   }
-  // });
-
-  // // console.log(arr1);
-  // const arr22: IPhonesManufacturedAfterDate[] = arr1.map((i) => ({
-  //   ...i,
-  //   initialDate: initial,
-  // }));
+// function calculateDailyCalories(str: string): IDataFromUser;
+// function calculateDailyCalories(num: number): IDataFromBase;
+function calculateDailyCalories<T extends string | number>(
+  numOrStr: T,
+): T extends string ? IDataFromUser : IDataFromBase {
+  if (typeof numOrStr === "string") {
+    const obj: IDataFromUser = {
+      weight: numOrStr,
+    };
+    return obj as FromUserOrFromBase<T>;
+  } else {
+    const obj: IDataFromBase = {
+      calories: numOrStr,
+    };
+    return obj as FromUserOrFromBase<T>;
+  }
 }
 
-// Второй аргумент при вызове функции должен быть связан с первым,
-// а значит мы получим подсказки - свойства этого объекта
+type GetStringType<T extends "hello" | "world" | string> = T extends "hello"
+  ? "hello"
+  : T extends "world"
+    ? "world"
+    : string;
 
-console.log(filterPhonesByDate(phones, "manufactured", "2022-01-01"));
+type GetfirstType<T> = T extends Array<infer First> ? First : T;
+
+type Ex = GetfirstType<number[]>;
+
+type ToArray<Type> = Type extends any ? Type[] : never;
+
+type ExampleArray = ToArray<Ex | string>;
