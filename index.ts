@@ -1,42 +1,104 @@
-interface Currencies {
-  usa: "usd";
-  china: "cny";
-  ukraine: "uah";
-  kz: "tenge";
+// Необходимо типизировать этот большой объект
+// Свойство futureClasses должно быть в зависимости от classes по типу
+// Свойства exClients и futureClients тоже должны быть в зависимости от currClients
+// ИЛИ все три зависят от общего родителя
+
+// Простыми словами: при добавлении свойства в целевой объект они должны быть
+// автоматически добавлены в зависимые (сразу подсказка от TS)
+
+interface Ifitness {
+  clubName: string;
+  location: string;
+  classes: IClasses[];
+  futureClasses: IFutereClasses[];
+  currClients: ICurrClients[];
+  exClients: IExClients[];
+  futureClients: IFutureClients[];
 }
 
-type CurrWithoutUSA = Omit<Currencies, "usa">; //исключение
-type CurrUSAAndUkraine = Pick<Currencies, "usa" | "ukraine">; // фильтрация по свойству
-type CountriesWithoutUSA = Exclude<keyof Currencies, "usa">; //удаление из union type
+interface IClasses {
+  name: string;
+  startsAt: string;
+  duration: number;
+}
 
-type FadeType = Exclude<MyAnimation, "swip">; //удаление из union type
-type SwipeType = Extract<MyAnimation | Direction, "swip">; // выбор подходящего типа
+type IFutereClasses = Omit<IClasses, "startsAt"> &
+  Record<"willStartsAt", string>;
 
-type CreateCustomCurr<T> = {
-  [P in keyof T as `custom${Capitalize<string & P>}`]: string;
+interface ICurrClients {
+  name: string;
+  age: string | number;
+  gender: "male" | "female";
+  timeLeft: string;
+}
+
+type IExClients = Omit<ICurrClients, "timeLeft"> & Record<"makeCallFor", Date>;
+type IFutureClients = Omit<IExClients, "age" | "gender">;
+
+const fitnessClubCenter: Ifitness = {
+  clubName: "Fitness club Center",
+  location: "central ave. 45, 5th floor",
+  classes: [
+    {
+      name: "yoga",
+      startsAt: "8:00 AM",
+      duration: 60,
+    },
+    {
+      name: "trx",
+      startsAt: "11:00 AM",
+      duration: 45,
+    },
+    {
+      name: "swimming",
+      startsAt: "3:00 PM",
+      duration: 70,
+    },
+  ],
+  futureClasses: [
+    {
+      name: "boxing",
+      willStartsAt: "6:00 PM",
+      duration: 40,
+    },
+    {
+      name: "breath training",
+      willStartsAt: "8:00 PM",
+      duration: 30,
+    },
+  ],
+  currClients: [
+    {
+      name: "John Smith",
+      age: "-",
+      gender: "male",
+      timeLeft: "1 month",
+    },
+    {
+      name: "Alise Smith",
+      age: 35,
+      gender: "female",
+      timeLeft: "3 month",
+    },
+    {
+      name: "Ann Sonne",
+      age: 24,
+      gender: "female",
+      timeLeft: "5 month",
+    },
+  ],
+  exClients: [
+    {
+      name: "Tom Smooth",
+      age: 50,
+      gender: "male",
+      makeCallFor: new Date("2023-08-12"),
+    },
+  ],
+  futureClients: [
+    {
+      name: "Maria",
+      makeCallFor: new Date("2023-07-10"),
+    },
+  ],
 };
-
-type PlayersNames = "alex" | "john";
-
-type CustomCurrencies = CreateCustomCurr<Currencies>;
-type GameDatacurr = Record<PlayersNames, CustomCurrencies>;
-
-const gameData: GameDatacurr = {
-  alex: {
-    customChina: "qwqwqwq",
-    customKz: "asdasd",
-    customUkraine: "asdacxzz",
-    customUsa: "asdfqwq",
-  },
-  john: {
-    customChina: "qwqwqwq",
-    customKz: "asdasd",
-    customUkraine: "asdacxzz",
-    customUsa: "asdfqwq",
-  },
-};
-
-type MyAnimation = "fade" | "swip";
-type Direction = "in" | "out";
-
-type MyNewAnimation = `${MyAnimation}${Capitalize<Direction>}`;
