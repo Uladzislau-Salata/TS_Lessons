@@ -1,21 +1,25 @@
-var retString = function () {
-    //... some magic
-    return "string";
-};
-var s = retString();
-console.log(s);
-var retNum = function () {
-    //... some magic
-    return 5;
-};
-var n = retNum();
-console.log(n);
-// function f2(): void {
-//   return true;
-// }
-// const f3 = function (): void {
-//   return true;
-// };
-var names = ["Anna", "John"];
-var newArr = names.slice();
-names.forEach(function (name, i, arr) { return arr.push("Hey"); });
+var jsonTest = '{"name":"Test","data":4}';
+var objFromJson = JSON.parse(jsonTest);
+var toDoList = [];
+// fetch("https://jsonplaceholder.typicode.com/todos/1")
+//   .then((response) => response.json())
+//   .then((json) => {
+//     if ("id" in json) {
+//       toDoList.push(json);
+//     }
+//     console.log(toDoList);
+//   });
+fetch("https://jsonplaceholder.typicode.com/todos")
+    .then(function (response) { return response.json(); })
+    .then(function (json) {
+    if ("id" in json) {
+        toDoList.push(json);
+    }
+    else if (Array.isArray(json)) {
+        toDoList = json;
+    }
+    else {
+        console.log("".concat(json, " - is a string"));
+    }
+    console.log(toDoList);
+});
