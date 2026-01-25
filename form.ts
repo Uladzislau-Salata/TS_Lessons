@@ -1,6 +1,7 @@
 interface IForm {
   login: string;
   password: string;
+  test: string;
 }
 
 // Необходимо типизировать объект валидации
@@ -10,6 +11,7 @@ interface IForm {
 const validationData: IValidate<IForm> = {
   login: { isValid: false, errorMsg: "At least 3 characters" },
   password: { isValid: true },
+  test:{ isValid: true }
 };
 
 type IValidate<T> = {
