@@ -1,25 +1,13 @@
-var jsonTest = '{"name":"Test","data":4}';
-var objFromJson = JSON.parse(jsonTest);
-var toDoList = [];
-// fetch("https://jsonplaceholder.typicode.com/todos/1")
-//   .then((response) => response.json())
-//   .then((json) => {
-//     if ("id" in json) {
-//       toDoList.push(json);
-//     }
-//     console.log(toDoList);
-//   });
-fetch("https://jsonplaceholder.typicode.com/todos")
-    .then(function (response) { return response.json(); })
-    .then(function (json) {
-    if ("id" in json) {
-        toDoList.push(json);
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+class Box {
+    width;
+    height;
+    constructor(width) {
+        this.width = width;
+        this.height = 500;
     }
-    else if (Array.isArray(json)) {
-        toDoList = json;
-    }
-    else {
-        console.log("".concat(json, " - is a string"));
-    }
-    console.log(toDoList);
-});
+}
+const firstBox = new Box(250);
+console.log(firstBox);
+//# sourceMappingURL=index.js.map
