@@ -1,6 +1,7 @@
-class Box {
+class Box<T> {
   width!: number;
-  height!: number;
+  height!: T;
+
   constructor(width: number) {
     this.width = width;
     this.height = 500;
