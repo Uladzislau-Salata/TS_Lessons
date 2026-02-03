@@ -42,7 +42,8 @@ class Box {
     const data = await new Date().toTimeString();
     this._content = `Date: ${data}, Content: ${value}`;
   }
-}
+}    
+
 
 const firstBox = new Box(250);
 firstBox.volume = 50000;
