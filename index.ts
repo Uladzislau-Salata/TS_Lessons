@@ -1,6 +1,6 @@
 class Box {
   width!: number;
-  height!: number = 500;
+  height: number = 500;
   volume!: number | undefined;
   _content!: string | undefined;
 
@@ -29,14 +29,6 @@ class Box {
     }
   }
 
-  // get content() {
-  //   return this._content;
-  // }
-
-  // set content(value) {
-  //   this._content = `Date: ${new Date().toTimeString()}, Content: ${value}`;
-  // }
-
   async content(value: string) {
     const data = await new Date().toTimeString();
     this._content = `Date: ${data}, Content: ${value}`;
@@ -45,27 +37,24 @@ class Box {
 
 const firstBox = new Box(250);
 firstBox.volume = 50000;
-// console.log((firstBox.content = "Test"));
 console.log(firstBox.content);
-// console.log(firstBox.checkBoxSize(600));
 
-// class User {
-//   name!: string;
-// }
-
-// const ivan = new User();
-// ivan.name = "Ivan";
-// console.log(ivan);
-
-class Styles {
-  [s: string]: string | ((s: string) => boolean);
-  method(a: string) {
-    if (a == "12345") {
-      return true;
+class PresentBox extends Box {
+  wrap!: string;
+  height: number = 600;
+  constructor(wrap: string, width: number) {
+    super(width);
+    this.wrap = wrap;
+  }
+  override async content(value: string, text?: string) {
+    const data = await new Date().toTimeString();
+    if (!text) {
+      super.content(value);
+    } else {
+      this._content = `Date: ${data}, Content: ${value}, Text:${text ? text : "No text"}`;
     }
+    console.log(this._content);
   }
 }
 
-const style = new Styles();
-style.color = "red";
-style.font = "Roboto";
+new PresentBox("red", 500).content("TV", "Gift");
