@@ -1,6 +1,6 @@
 class Box {
   width!: number;
-  height!: number;
+  height!: number = 500;
   volume!: number | undefined;
   _content!: string | undefined;
 
@@ -8,7 +8,6 @@ class Box {
     this.width = width;
     this.volume = volume;
     this._content = content;
-    this.height = 500;
   }
 
   calculateVolume(): void {
@@ -42,12 +41,11 @@ class Box {
     const data = await new Date().toTimeString();
     this._content = `Date: ${data}, Content: ${value}`;
   }
-}    
-
+}
 
 const firstBox = new Box(250);
 firstBox.volume = 50000;
-console.log((firstBox.content = "Test"));
+// console.log((firstBox.content = "Test"));
 console.log(firstBox.content);
 // console.log(firstBox.checkBoxSize(600));
 
@@ -58,3 +56,16 @@ console.log(firstBox.content);
 // const ivan = new User();
 // ivan.name = "Ivan";
 // console.log(ivan);
+
+class Styles {
+  [s: string]: string | ((s: string) => boolean);
+  method(a: string) {
+    if (a == "12345") {
+      return true;
+    }
+  }
+}
+
+const style = new Styles();
+style.color = "red";
+style.font = "Roboto";
