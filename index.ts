@@ -1,5 +1,5 @@
 class Player {
-  private login!: string;
+  #login!: string;
   private _password!: string;
   public server!: string;
   protected consent!: boolean;
@@ -22,7 +22,7 @@ class CompetitivePlayer extends Player {
 }
 
 const player = new Player();
-player.password = "11245";
+// player.#login
 
 // player.login = "asdfsdfad";
 
