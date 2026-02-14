@@ -1,8 +1,22 @@
+function setName() {
+  return "COD";
+}
+
 class Player {
+  private static game: string;
+
   #login!: string;
   private _password!: string;
   public server!: string;
   protected consent!: boolean;
+
+  static {
+    Player.game = setName();
+  }
+
+  //   constructor(game: string) {
+  //     Player.game = game;
+  //   }
 
   get password() {
     return this._password;
@@ -12,16 +26,25 @@ class Player {
     //Validation
     this._password = newPass;
   }
-}
 
-class CompetitivePlayer extends Player {
-  rank!: number;
-  private isConsented() {
-    this.consent ? "Yes" : "No";
+  static getGameName() {
+    return Player.game;
   }
 }
 
-const player = new Player();
+new Player();
+new Player();
+new Player();
+console.log(Player.getGameName());
+
+// class CompetitivePlayer extends Player {
+//   rank!: number;
+//   private isConsented() {
+//     this.consent ? "Yes" : "No";
+//   }
+// }
+
+// const player = new Player();
 // player.#login
 
 // player.login = "asdfsdfad";
