@@ -1,59 +1,44 @@
-enum TransferStatus {
-  Pending = "pending",
-  Rejected = "rejected",
-  Completed = "completed",
-}
+class Player {
+  private login!: string;
+  private _password!: string;
+  public server!: string;
+  protected consent!: boolean;
 
-enum ErrorMessages {
-  NotFound = "Not found: 404",
-  NotEnoughSpace = "Not enough space: 507",
-  Forbidden = "Forbidden: 403",
-}
-
-interface ITransfer {
-  path: string;
-  data: string[];
-  date?: Date | undefined;
-  start: (p: string, d: string[]) => string;
-  stop: (reason: string) => string;
-}
-
-interface TransferError {
-  message: ErrorMessages;
-}
-
-// Класс должен имплементировать ITransfer и TransferError
-class SingleFileTransfer implements ITransfer, TransferError {
-  path!: string;
-  data!: string[];
-  date?: Date | undefined;
-  message!: ErrorMessages;
-  transferStatus: TransferStatus;
-
-  constructor(status: TransferStatus) {
-    this.transferStatus = status;
+  get password() {
+    return this._password;
   }
 
-  start(p: string, d: string[]) {
-    return "Transfer started";
+  set password(newPass: string) {
+    //Validation
+    this._password = newPass;
   }
-
-  // Никто не запрещает создавать стрелочные функции
-  // С ними проще работать с this
-  checkTransferStatus = (): string => {
-    return this.transferStatus;
-  };
-
-  stop = (reason: string) => {
-    return `Transfer stopped, reason: ${reason}, Date: ${new Date().toLocaleString()}`;
-  };
-
-  makeError = (): string => {
-    return `Status: ${TransferStatus.Rejected}, error message: ${ErrorMessages.Forbidden}`;
-  };
 }
 
-const transfer = new SingleFileTransfer(TransferStatus.Pending);
-console.log(transfer.checkTransferStatus());
-console.log(transfer.stop("Test"));
-console.log(transfer.makeError());
+class CompetitivePlayer extends Player {
+  rank!: number;
+  private isConsented() {
+    this.consent ? "Yes" : "No";
+  }
+}
+
+const player = new Player();
+player.password = "11245";
+
+// player.login = "asdfsdfad";
+
+// class User {
+//   public email!: string;
+//   public name!: string;
+
+//   constructor(email: string, name: string) {
+//     this.email = email;
+//     this.name = name;
+//   }
+// }
+
+// class User {
+//   constructor(
+//     public email: string,
+//     public name: string,
+//   ) {}
+// }
