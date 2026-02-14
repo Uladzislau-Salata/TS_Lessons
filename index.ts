@@ -1,60 +1,59 @@
-class Box {
-  width!: number;
-  height: number = 500;
-  volume!: number | undefined;
-  _content!: string | undefined;
-
-  constructor(width: number, volume?: number, content?: string) {
-    this.width = width;
-    this.volume = volume;
-    this._content = content;
-  }
-
-  calculateVolume(): void {
-    if (!this.volume) {
-      this.volume = this.width * this.height;
-      console.log(`Объём посылки: ${this.volume}`);
-    } else {
-      console.log(`Объём посылки: ${this.volume}`);
-    }
-  }
-
-  checkBoxSize(transport: number): string;
-  checkBoxSize(transport: number[]): string;
-  checkBoxSize(transport: number | number[]): string {
-    if (typeof transport === "number") {
-      return transport >= this.width ? "ok" : "Not ok";
-    } else {
-      return transport.some((t) => t >= this.width) ? "ok" : "Not ok";
-    }
-  }
-
-  async content(value: string) {
-    const data = await new Date().toTimeString();
-    this._content = `Date: ${data}, Content: ${value}`;
-  }
+enum TransferStatus {
+  Pending = "pending",
+  Rejected = "rejected",
+  Completed = "completed",
 }
 
-const firstBox = new Box(250);
-firstBox.volume = 50000;
-console.log(firstBox.content);
-
-class PresentBox extends Box {
-  wrap!: string;
-  height: number = 600;
-  constructor(wrap: string, width: number) {
-    super(width);
-    this.wrap = wrap;
-  }
-  override async content(value: string, text?: string) {
-    const data = await new Date().toTimeString();
-    if (!text) {
-      super.content(value);
-    } else {
-      this._content = `Date: ${data}, Content: ${value}, Text:${text ? text : "No text"}`;
-    }
-    console.log(this._content);
-  }
+enum ErrorMessages {
+  NotFound = "Not found: 404",
+  NotEnoughSpace = "Not enough space: 507",
+  Forbidden = "Forbidden: 403",
 }
 
-new PresentBox("red", 500).content("TV", "Gift");
+interface ITransfer {
+  path: string;
+  data: string[];
+  date?: Date | undefined;
+  start: (p: string, d: string[]) => string;
+  stop: (reason: string) => string;
+}
+
+interface TransferError {
+  message: ErrorMessages;
+}
+
+// Класс должен имплементировать ITransfer и TransferError
+class SingleFileTransfer implements ITransfer, TransferError {
+  path!: string;
+  data!: string[];
+  date?: Date | undefined;
+  message!: ErrorMessages;
+  transferStatus: TransferStatus;
+
+  constructor(status: TransferStatus) {
+    this.transferStatus = status;
+  }
+
+  start(p: string, d: string[]) {
+    return "Transfer started";
+  }
+
+  // Никто не запрещает создавать стрелочные функции
+  // С ними проще работать с this
+  checkTransferStatus = (): string => {
+    return this.transferStatus;
+  };
+
+  stop = (reason: string) => {
+    return `Transfer stopped, reason: ${reason}, Date: ${new Date().toLocaleString()}`;
+  };
+
+  makeError = (): string => {
+    return `Status: ${TransferStatus.Rejected}, error message: ${ErrorMessages.Forbidden}`;
+  };
+}
+
+const transfer = new SingleFileTransfer(TransferStatus.Pending);
+console.log(transfer.checkTransferStatus());
+console.log(transfer.stop("Test"));
+console.log(transfer.makeError());
